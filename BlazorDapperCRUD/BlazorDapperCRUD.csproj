@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\imagensAndGifs\iCheck.svg" />
+    <None Include="wwwroot\imagensAndGifs\iEdit.svg" />
+    <None Include="wwwroot\imagensAndGifs\iRed.svg" />
+    <None Include="wwwroot\imagensAndGifs\iTrash.svg" />
+    <None Include="wwwroot\imagensAndGifs\loading-animations.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="1.1.1" />
+  </ItemGroup>
+
+</Project>

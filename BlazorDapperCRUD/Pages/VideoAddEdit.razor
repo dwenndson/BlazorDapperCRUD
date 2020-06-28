@@ -1,0 +1,81 @@
+﻿@using BlazorDapperCRUD.Data.Service
+@using BlazorDapperCRUD.Data.Model
+@page "/videoaddedit/{id:int}"
+@inject IVideoService VideoService
+@inject NavigationManager NavigationManager
+
+<h1>@pagetitle</h1>
+
+<EditForm Model="@video" OnValidSubmit="@VideoSave">
+    <table class="editform">
+        <tr>
+            <td> Video Title:</td>
+            <td><input type="text" @bind="video.Title" required /></td>
+        </tr>
+        <tr>
+            <td> Date Published:</td>
+            <td><input type="date" @bind="video.DatePublished" required min="1930-01-01" max="2050-12-31" /></td>
+        </tr>
+        <tr>
+            <td> Is Active:</td>
+            <td><input type="checkbox" @bind="video.IsActive" required /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="@buttontext"  />
+                <input type="button" value="Cancel" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+@code {
+    //Create a new, empty Video object
+    Video video = new Video();
+
+    [Parameter]
+    public int id { get; set; }
+
+    //Setar pagina padrão titulo e um butão texto
+    public string pagetitle = "Add a Video";
+    public string buttontext = "Add";
+
+    //Executa quando a pagina abrir, em modo padrão
+    protected override async Task OnInitializedAsync()
+    {
+        // Se for passado o id 0, assume novo video.
+        if (id == 0)
+        {
+            DateTime dafaltdate = DateTime.Today;
+            video.DatePublished = dafaltdate;
+            video.IsActive = true;
+        }
+        else
+        {
+            video = await VideoService.Video_GetOne(id);
+            pagetitle = "Edit Video";
+            buttontext = "Update";
+        }
+
+
+    }
+
+    protected async Task VideoSave()
+    {
+        if (video.VideoID == 0)
+        {
+            //Inserir se id for 0
+            await VideoService.VideoInset(video);
+        }
+        else
+        {
+            //Atualiza se id for > 0
+            await VideoService.VideoUpdate(video);
+        }
+        NavigationManager.NavigateTo("/videolist");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/videolist");
+    }
+}

@@ -1,0 +1,18 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+<button type="button" @onclick="@addVideo" style="align-content:center">Adicionar Video</button>
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<p>Este é a pag Index</p>
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+    void addVideo()
+    {
+        NavigationManager.NavigateTo("/videoadd");
+    }
+}
